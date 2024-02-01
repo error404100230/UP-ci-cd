@@ -15,12 +15,12 @@ pipeline {
         }
         stage('build image') {
             steps {
-                      sh 'docker build -t vinsovann847/php:$BUILD_NUMBER .'
+                      sh 'docker build -t $DOCKER_REGISTRY_URL/php:$BUILD_NUMBER .'
             }
         }
         stage('push image to hub') {
             steps {
-              withCredentials([string(credentialsId: 'docker-hub-id', variable: 'hubpwd')]) {
+              withCredentials([string(credentialsId: 'docker-hub-id', variable: 'hubpwd', variable: 'DOCKER_REGISTRY_URL')]) {
                   sh 'docker login -u ${DOCKER_REGISTRY_URL} -p ${hubpwd}'
               }
               
