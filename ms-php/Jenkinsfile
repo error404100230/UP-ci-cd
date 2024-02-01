@@ -1,6 +1,12 @@
 pipeline {
     agent any
     stages {
+
+        stage('Branch'){
+            steps {
+                echo "branch ${params.branchName}"
+            }
+        }
         stage('checkout code') {
             steps {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/error404100230/php-docker']])
@@ -15,10 +21,10 @@ pipeline {
         stage('push image to hub') {
             steps {
               withCredentials([string(credentialsId: 'docker-hub-id', variable: 'hubpwd')]) {
-                  sh 'docker login -u vinsovann847 -p ${hubpwd}'
+                  sh 'docker login -u $DOCKER_REGISTRY_URL -p ${hubpwd}'
               }
               
-              sh 'docker push vinsovann847/php::$BUILD_NUMBER'
+              sh 'docker push $DOCKER_REGISTRY_URL/php:$BUILD_NUMBER'
             }
         }
     }
