@@ -27,6 +27,8 @@ pipeline {
                   sh 'docker login -u ${DOCKER_REGISTRY_URL} -p ${hubpwd}'
 
                   sh 'docker push ${DOCKER_REGISTRY_URL}/php:$BUILD_NUMBER'
+
+                  sh 'docker image rm ${DOCKER_REGISTRY_URL}/php:$BUILD_NUMBER';
               }
             }
         }
