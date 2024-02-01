@@ -4,12 +4,12 @@ pipeline {
 
         stage('Branch'){
             steps {
-                echo "branch ${params.branchName}"
+                echo "branch ${params.branchName.split('/').last()}"
             }
         }
         stage('checkout code') {
             steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/error404100230/php-docker']])
+                checkout scmGit(branches: [[name: '${params.branchName.split('/').last()}']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/error404100230/php-docker']])
           
             }
         }
