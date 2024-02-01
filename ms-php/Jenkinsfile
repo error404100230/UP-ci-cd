@@ -23,10 +23,11 @@ pipeline {
         stage('push image to hub') {
             steps {
               withCredentials([string(credentialsId: 'DOCKER_REGISTRY_URL', variable: 'DOCKER_REGISTRY_URL'), string(credentialsId: 'docker-hub-id', variable: 'hubpwd')]) {
+                  
                   sh 'docker login -u ${DOCKER_REGISTRY_URL} -p ${hubpwd}'
+
+                  sh 'docker push ${DOCKER_REGISTRY_URL}/php:$BUILD_NUMBER'
               }
-              
-              sh 'docker push ${DOCKER_REGISTRY_URL}/php:$BUILD_NUMBER'
             }
         }
     }
