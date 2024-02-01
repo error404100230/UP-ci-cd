@@ -9,7 +9,7 @@ pipeline {
         }
         stage('build image') {
             steps {
-                      sh 'docker build -t vinsovann847/php .'
+                      sh 'docker build -t vinsovann847/php:$BUILD_NUMBER .'
             }
         }
         stage('push image to hub') {
@@ -18,7 +18,7 @@ pipeline {
                   sh 'docker login -u vinsovann847 -p ${hubpwd}'
               }
               
-              sh 'docker push vinsovann847/php:latest'
+              sh 'docker push vinsovann847/php::$BUILD_NUMBER'
             }
         }
     }
