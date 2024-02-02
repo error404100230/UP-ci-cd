@@ -36,7 +36,9 @@ epipeline {
        stage('push telegram msg') {
             steps {
                 script {
-                    sendTelegram("deployment done")
+                  //  sendTelegram("deployment done")
+
+                    httpRequest httpMode: 'POST', ignoreSslErrors: true, responseHandle: 'NONE', url: 'https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage?chat_id=-4048256446&text="deployment success"', wrapAsMultipart: false
                 }
             }
         }
@@ -44,11 +46,11 @@ epipeline {
     }
 }
 
- def sendTelegram(message) {
+// def sendTelegram(message) {
    // def token = credentials('telegramToken')
    // def chatId = credentials('telegramChatId')
    // def apiUrl = "https://api.telegram.org/bot${token}/sendMessage"
-httpRequest httpMode: 'POST', ignoreSslErrors: true, responseHandle: 'NONE', url: 'https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage?chat_id=-4048256446&text=${message}', wrapAsMultipart: false
+//httpRequest httpMode: 'POST', ignoreSslErrors: true, responseHandle: 'NONE', url: 'https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage?chat_id=-4048256446&text=${message}', wrapAsMultipart: false
   //  def chatId = "-4048256446"
  //   def apiUrl = "https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage"
   //  def payload = [
@@ -58,4 +60,4 @@ httpRequest httpMode: 'POST', ignoreSslErrors: true, responseHandle: 'NONE', url
   //  ]
   //   echo "payload ==> ". payload;
  //   httpRequest(payload)
-}
+//}
