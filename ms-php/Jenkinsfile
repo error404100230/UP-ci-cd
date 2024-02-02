@@ -32,5 +32,29 @@ pipeline {
               }
             }
         }
+
+       stage('push telegram msg') {
+            steps {
+                script {
+                    sendTelegram("deployment done")
+                }
+            }
+        }
+        
     }
+}
+
+ def sendTelegram(message) {
+   // def token = credentials('telegramToken')
+   // def chatId = credentials('telegramChatId')
+   // def apiUrl = "https://api.telegram.org/bot${token}/sendMessage"
+
+    def chatId = "-4048256446"
+    def apiUrl = "https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage"
+    def payload = [
+        uri: apiUrl,
+        contentType: 'APPLICATION_FORM',
+        body: [chat_id: chatId, text: message]
+    ]
+    httpRequest(payload)
 }
