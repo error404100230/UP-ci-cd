@@ -36,34 +36,18 @@ epipeline {
        stage('push telegram msg') {
             steps {
                 script {
-                   // sendTelegram("deployment done")
+                 def jenkinsUrl = 'https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage?chat_id=-4048256446&text="done"' // Replace with your Jenkins URL
+                
 
-                    httpRequest (consoleLogResponseBody: true,
-                        contentType: 'APPLICATION_JSON',
-                        httpMode: 'POST',
-                        url: "bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage?-4048256446&text='deployment success'",
-                        validResponseCodes: '200')
+                    // Construct the cURL command
+                    def curlCommand = "curl -X POST ${jenkinsUrl}"
 
-                   // httpRequest httpMode: 'POST', ignoreSslErrors: true, responseHandle: 'NONE', url: 'https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage?chat_id=-4048256446&text="deployment success"', wrapAsMultipart: false
+                    // Execute the cURL command
+                    sh curlCommand
                 }
             }
         }
         
     }
 }
-
-// def sendTelegram(message) {
-//     def encodedMessage = URLEncoder.encode(message, "UTF-8")
-
-//     withCredentials([string(credentialsId: 'telegramToken', variable: 'TOKEN'),
-//     string(credentialsId: 'telegramChatId', variable: 'CHAT_ID')]) {
-
-//         response = httpRequest (consoleLogResponseBody: true,
-//                 contentType: 'APPLICATION_JSON',
-//                 httpMode: 'GET',
-//                 url: "https://api.telegram.org/bot$TOKEN/sendMessage?text=$encodedMessage&chat_id=$CHAT_ID&parse_mode=html&disable_web_page_preview=true",
-//                 validResponseCodes: '200')
-//         return response
-//     }
-// }
 
