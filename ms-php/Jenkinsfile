@@ -15,7 +15,7 @@ pipeline  {
         // GIT_COMMIT_SHORT = sh(returnStdout: true, script: "git rev-parse --short ${GIT_COMMIT}").trim()
         GIT_INFO = "Hello from dual gaming "
         TEXT_BREAK = "--------------------------------------------------------------"
-        TEXT_PRE_BUILD = "Image is Building"
+        TEXT_PRE_BUILD = "${TEXT_BREAK}\n${GIT_INFO}\n${JOB_NAME} is Building \n ${CURRENT_BUILD_NUMBER}"
 
         // Telegram Message Success and Failure
         TEXT_SUCCESS_BUILD = "${JOB_NAME} is Success"
