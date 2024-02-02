@@ -1,5 +1,29 @@
 pipeline  {
     agent any
+
+    environment {
+        // Telegram configre
+        // TOKEN = credentials('telegramToken')
+        // CHAT_ID = credentials('telegramChatid')
+        TOKEN = "6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A"
+        CHAT_ID = "-4048256446"
+
+        // Telegram Message Pre Build
+        CURRENT_BUILD_NUMBER = "${currentBuild.number}"
+        // GIT_MESSAGE = sh(returnStdout: true, script: "git log -n 1 --format=%s ${GIT_COMMIT}").trim()
+        // GIT_AUTHOR = sh(returnStdout: true, script: "git log -n 1 --format=%ae ${GIT_COMMIT}").trim()
+        // GIT_COMMIT_SHORT = sh(returnStdout: true, script: "git rev-parse --short ${GIT_COMMIT}").trim()
+        GIT_INFO = "Hello from dual gaming "
+        TEXT_BREAK = "--------------------------------------------------------------"
+        TEXT_PRE_BUILD = "Image is Building"
+
+        // Telegram Message Success and Failure
+        TEXT_SUCCESS_BUILD = "${JOB_NAME} is Success"
+        TEXT_FAILURE_BUILD = "${JOB_NAME} is Failure"
+    }
+
+    
+
     stages {
 
         stage('Branch'){
@@ -14,6 +38,9 @@ pipeline  {
             }
         }
         stage('build image') {
+
+            sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_PRE_BUILD}' --form chat_id='${CHAT_ID}'"
+
             steps {
                  withCredentials([string(credentialsId: 'DOCKER_REGISTRY_URL', variable: 'DOCKER_REGISTRY_URL')]) {
                       sh 'docker build -t ${DOCKER_REGISTRY_URL}/php:$BUILD_NUMBER .'
@@ -33,23 +60,23 @@ pipeline  {
             }
         }
 
-        stage('push telegram') {
-            steps {
-                 sh "curl --location --request POST 'https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage' --form text='success ' --form chat_id='-4048256446'"
-            }
-        }
+        // stage('push telegram') {
+        //     steps {
+        //          sh "curl --location --request POST 'https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage' --form text='success ' --form chat_id='-4048256446'"
+        //     }
+        // }
         
     }
 
     post {
         success {
             script{
-                sh "curl --location --request POST 'https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage' --form text='success ' --form chat_id='-4048256446'"
+               sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_SUCCESS_BUILD}' --form chat_id='${CHAT_ID}'"
             }
         }
         failure {
             script{
-                sh "curl --location --request POST 'https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage' --form text='fail' --form chat_id='-4048256446'"
+                sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_FAILURE_BUILD}' --form chat_id='${CHAT_ID}'"
             }
         }
     }
