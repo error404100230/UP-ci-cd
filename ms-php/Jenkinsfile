@@ -48,15 +48,14 @@ epipeline {
    // def token = credentials('telegramToken')
    // def chatId = credentials('telegramChatId')
    // def apiUrl = "https://api.telegram.org/bot${token}/sendMessage"
-
-    def chatId = "-4048256446"
-    def apiUrl = "https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage"
-    def payload = [
-        method: 'POST',
-        uri: apiUrl,
-        contentType: 'APPLICATION_FORM',
-        body: [chat_id: chatId, text: message]
-    ]
-     echo "payload ==> ". payload;
-    httpRequest(payload)
+httpRequest httpMode: 'POST', ignoreSslErrors: true, responseHandle: 'NONE', url: 'https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage?chat_id=-4048256446&text=${message}', wrapAsMultipart: false
+  //  def chatId = "-4048256446"
+ //   def apiUrl = "https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage"
+  //  def payload = [
+ //       uri: apiUrl,
+   //     contentType: 'APPLICATION_FORM',
+   //     body: [chat_id: chatId, text: message]
+  //  ]
+  //   echo "payload ==> ". payload;
+ //   httpRequest(payload)
 }
