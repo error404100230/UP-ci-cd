@@ -1,29 +1,8 @@
-version: "3.5"
+version: '2.4'
 services:
-  service-hightech:
-    image: htmldemo/hightech:1.0.1
+  db:
+    image: postgres
+  my_app:
+    build: ./test-app
     ports:
-      - 6001:80
-    deploy:
-      mode: global
-      #replicas: 3
-      update_config:
-        parallelism: 1
-        order: start-first
-        failure_action: rollback
-      restart_policy:
-        condition: on-failure
-
-  service-car:
-    image: htmldemo/car
-    ports:
-      - 6002:80
-    deploy:
-      mode: replicated
-      replicas: 2
-      update_config:
-        parallelism: 1
-        order: start-first
-        failure_action: rollback
-      restart_policy:
-        condition: on-failure
+      - "8080:8080"
