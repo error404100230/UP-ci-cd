@@ -6,7 +6,7 @@ pipeline  {
         // TOKEN = credentials('telegramToken')
         // CHAT_ID = credentials('telegramChatid')
         TOKEN = "6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A"
-        CHAT_ID = "-4048256446"
+        CHAT_ID = "-4002181219"
 
         // Telegram Message Pre Build
         CURRENT_BUILD_NUMBER = "${currentBuild.number}"
