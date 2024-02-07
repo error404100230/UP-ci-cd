@@ -1,7 +1,6 @@
-version: '3.5'
- 
+version: "3.5"
 services:
-            
+
   service-hightech:
     image: htmldemo/hightech:1.0.1
     ports:
@@ -15,7 +14,7 @@ services:
         failure_action: rollback
       restart_policy:
         condition: on-failure
- 
+
   service-car:
     image: htmldemo/car
     ports:
