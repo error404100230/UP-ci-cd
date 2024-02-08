@@ -26,6 +26,13 @@ pipeline  {
 
     stages {
 
+        stage('test compose') {
+            steps {
+                sh 'docker-compose up -d'
+          
+            }
+        }
+
         stage('Branch'){
             steps {
                 echo "branch ${params.branchName.split('/').last()}"
