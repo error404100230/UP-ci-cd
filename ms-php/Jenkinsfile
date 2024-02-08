@@ -20,7 +20,7 @@ pipeline  {
         // Telegram Message Success and Failure
         TEXT_SUCCESS_BUILD = "${JOB_NAME} is Success"
         TEXT_FAILURE_BUILD = "${JOB_NAME} is Failure"
-        USERHUB = "vinsovann847"
+        USERHUB = credentials('DOCKER_REGISTRY_URL')
         ARTIFACT = "php"
         NUMBER = "${CURRENT_BUILD_NUMBER}"
     }
