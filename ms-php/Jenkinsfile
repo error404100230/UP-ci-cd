@@ -20,9 +20,9 @@ pipeline  {
         // Telegram Message Success and Failure
         TEXT_SUCCESS_BUILD = "${JOB_NAME} is Success"
         TEXT_FAILURE_BUILD = "${JOB_NAME} is Failure"
-        URI = "${DOCKER_REGISTRY_URL}"
+        URI = "vinsovann847"
         ARTIFACT = "php"
-        NUMBER = "${BUILD_NUMBER}"
+        NUMBER = "${CURRENT_BUILD_NUMBER}"
     }
 
     
