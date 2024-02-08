@@ -37,14 +37,6 @@ pipeline  {
           
             }
         }
-
-        
-        stage('test compose') {
-            steps {
-                sh 'docker-compose -f docker-compose.yml up -d'
-          
-            }
-        }
         
         stage('build image') {
             steps {
@@ -64,6 +56,12 @@ pipeline  {
 
                   sh 'docker image rm ${DOCKER_REGISTRY_URL}/php:$BUILD_NUMBER';
               }
+            }
+        }
+
+        stage('deploy swarm container') {
+            steps {
+                sh 'docker stack deploy --compose-file docker-compose.yml testswarmcontainer'
             }
         }
 
