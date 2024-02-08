@@ -26,13 +26,6 @@ pipeline  {
 
     stages {
 
-        stage('test compose') {
-            steps {
-                sh 'docker-compose up -d'
-          
-            }
-        }
-
         stage('Branch'){
             steps {
                 echo "branch ${params.branchName.split('/').last()}"
@@ -44,6 +37,15 @@ pipeline  {
           
             }
         }
+
+        
+        stage('test compose') {
+            steps {
+                sh 'docker-compose -f docker-compose.yml up -d'
+          
+            }
+        }
+        
         stage('build image') {
             steps {
                 sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_PRE_BUILD}' --form chat_id='${CHAT_ID}'"
