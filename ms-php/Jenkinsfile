@@ -20,7 +20,7 @@ pipeline  {
         // Telegram Message Success and Failure
         TEXT_SUCCESS_BUILD = "${JOB_NAME} is Success"
         TEXT_FAILURE_BUILD = "${JOB_NAME} is Failure"
-        URINAME = "vinsovann847"
+        URI = "vinsovann847"
         ARTIFACT = "php"
         NUMBER = "${CURRENT_BUILD_NUMBER}"
     }
@@ -69,9 +69,13 @@ pipeline  {
             
                     // sh 'docker stack deploy --compose-file docker-compose.yml testswarmcontainer  --env URI=${URINAME} --env ARTIFACT=${ARTIFACT} --env NUMBER=${NUMBER} '
 
-                 sh 'docker stack deploy -c docker-compose.yml testswarmcontainer' +
-                       ' --with-registry-auth' +
-                       ' --env URI=${URINAME} --env ARTIFACT=${ARTIFACT} --env NUMBER=${NUMBER}'
+                 // sh 'docker stack deploy -c docker-compose.yml testswarmcontainer' +
+                 //       ' --with-registry-auth' +
+                 //       ' --env URI=${URINAME} --env ARTIFACT=${ARTIFACT} --env NUMBER=${NUMBER}'
+
+                 script {
+                    sh 'docker stack deploy -c docker-compose.yml testswarmcontainer'
+                }
                 
             }
         }
