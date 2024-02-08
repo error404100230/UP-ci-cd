@@ -67,7 +67,11 @@ pipeline  {
                    echo "uri: ${URINAME}"
                    echo "artifact: ${ARTIFACT}"
             
-                    sh 'docker stack deploy --compose-file docker-compose.yml testswarmcontainer  --env URI=${URINAME} --env ARTIFACT=${ARTIFACT} --env NUMBER=${NUMBER} '
+                    // sh 'docker stack deploy --compose-file docker-compose.yml testswarmcontainer  --env URI=${URINAME} --env ARTIFACT=${ARTIFACT} --env NUMBER=${NUMBER} '
+
+                 sh 'docker stack deploy -c docker-compose.yml testswarmcontainer' +
+                       ' --with-registry-auth' +
+                       ' --env URI=${URINAME} --env ARTIFACT=${ARTIFACT} --env NUMBER=${NUMBER}'
                 
             }
         }
