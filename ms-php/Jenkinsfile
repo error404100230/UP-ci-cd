@@ -20,6 +20,9 @@ pipeline  {
         // Telegram Message Success and Failure
         TEXT_SUCCESS_BUILD = "${JOB_NAME} is Success"
         TEXT_FAILURE_BUILD = "${JOB_NAME} is Failure"
+        URI = "${DOCKER_REGISTRY_URL}"
+        ARTIFACT = "php"
+        NUMBER = "${BUILD_NUMBER}"
     }
 
     
@@ -61,7 +64,9 @@ pipeline  {
 
         stage('deploy swarm container') {
             steps {
-                sh 'docker stack deploy --compose-file docker-compose.yml testswarmcontainer'
+                 withEnv(['uri=${URI}', 'artifact=${ARTIFACT}', 'number=${NUMBER}']) {
+                    sh 'docker stack deploy --compose-file docker-compose.yml testswarmcontainer'
+                }
             }
         }
 
