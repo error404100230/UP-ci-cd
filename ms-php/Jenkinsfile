@@ -2,17 +2,12 @@ pipeline  {
     agent any
 
     environment {
-        // Telegram configre
-        // TOKEN = credentials('telegramToken')
-        // CHAT_ID = credentials('telegramChatid')
+
         TOKEN = "6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A"
         CHAT_ID = "-4002181219"
 
         // Telegram Message Pre Build
         CURRENT_BUILD_NUMBER = "${currentBuild.number}"
-        // GIT_MESSAGE = sh(returnStdout: true, script: "git log -n 1 --format=%s ${GIT_COMMIT}").trim()
-        // GIT_AUTHOR = sh(returnStdout: true, script: "git log -n 1 --format=%ae ${GIT_COMMIT}").trim()
-        // GIT_COMMIT_SHORT = sh(returnStdout: true, script: "git rev-parse --short ${GIT_COMMIT}").trim()
         GIT_INFO = "Hello from dual gaming "
         TEXT_BREAK = "--------------------------------------------------------------"
         TEXT_PRE_BUILD = "${TEXT_BREAK}\n${GIT_INFO}\n${JOB_NAME} is Building \n ${CURRENT_BUILD_NUMBER}"
@@ -23,6 +18,7 @@ pipeline  {
         USERHUB = credentials('DOCKER_REGISTRY_URL')
         ARTIFACT = "php"
         NUMBER = "${CURRENT_BUILD_NUMBER}"
+        STACK_NAME = "assessment3"
     }
 
     
@@ -66,26 +62,13 @@ pipeline  {
             steps {
                    echo "uri: ${USERHUB}"
                    echo "artifact: ${ARTIFACT}"
-            
-                    // sh 'docker stack deploy --compose-file docker-compose.yml testswarmcontainer  --env URI=${URINAME} --env ARTIFACT=${ARTIFACT} --env NUMBER=${NUMBER} '
-
-                 // sh 'docker stack deploy -c docker-compose.yml testswarmcontainer' +
-                 //       ' --with-registry-auth' +
-                 //       ' --env URI=${URINAME} --env ARTIFACT=${ARTIFACT} --env NUMBER=${NUMBER}'
-
                  script {
-                    sh 'docker stack deploy -c docker-compose.yml testswarmcontainer'
+                    sh 'docker stack deploy -c docker-compose.yml ${env.STACK_NAME}'
                 }
                 
             }
         }
 
-        // stage('push telegram') {
-        //     steps {
-        //          sh "curl --location --request POST 'https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage' --form text='success ' --form chat_id='-4048256446'"
-        //     }
-        // }
-        
     }
 
     post {
@@ -101,18 +84,3 @@ pipeline  {
         }
     }
 }
-
-// def sendTelegram(message) {
-//    // def token = credentials('telegramToken')
-//    // def chatId = credentials('telegramChatId')
-//    // def apiUrl = "https://api.telegram.org/bot${token}/sendMessage"
-
-//     def chatId = "-4048256446"
-//     def apiUrl = "https://api.telegram.org/bot6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A/sendMessage"
-//     def payload = [
-//         uri: apiUrl,
-//         contentType: 'APPLICATION_FORM',
-//         body: [chat_id: chatId, text: message]
-//     ]
-//     httpRequest(payload)
-// }
