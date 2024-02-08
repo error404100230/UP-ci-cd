@@ -61,7 +61,8 @@ pipeline  {
         stage('deploy swarm container') {
             steps {
                  script {
-                    sh 'docker stack deploy -c docker-compose.yml ${env.STACK_NAME}'
+                    echo '${env.STACK_NAME}'
+                    sh "docker stack deploy -c docker-compose.yml '${env.STACK_NAME}'"
                 }
                 
             }
