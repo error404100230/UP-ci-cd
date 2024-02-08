@@ -60,8 +60,6 @@ pipeline  {
 
         stage('deploy swarm container') {
             steps {
-                   echo "uri: ${USERHUB}"
-                   echo "artifact: ${ARTIFACT}"
                  script {
                     sh 'docker stack deploy -c docker-compose.yml ${env.STACK_NAME}'
                 }
