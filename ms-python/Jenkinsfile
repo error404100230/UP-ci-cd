@@ -15,7 +15,7 @@ pipeline  {
         TEXT_SUCCESS_BUILD = "${JOB_NAME} is Success"
         TEXT_FAILURE_BUILD = "${JOB_NAME} is Failure"
         USERHUB = credentials('DOCKER_REGISTRY_URL')
-        ARTIFACT = "java"
+        ARTIFACT = "python"
         NUMBER = "${CURRENT_BUILD_NUMBER}"
         STACK_NAME = "assessment3"
     }
