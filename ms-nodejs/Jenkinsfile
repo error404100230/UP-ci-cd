@@ -32,7 +32,7 @@ pipeline  {
         }
         stage('checkout code') {
             steps {
-                checkout scmGit(branches: [[name: "${params.branchName.split('/').last()}"]], extensions: [], userRemoteConfigs: [[url: 'https://github.com/error404100230/php-docker']])
+                checkout scmGit(branches: [[name: "${params.branchName.split('/').last()}"]], extensions: [], userRemoteConfigs: [[url: 'https://github.com/error404100230/nodejs-docker']])
           
             }
         }
@@ -41,7 +41,7 @@ pipeline  {
             steps {
                 sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_PRE_BUILD}' --form chat_id='${CHAT_ID}'"
                  withCredentials([string(credentialsId: 'DOCKER_REGISTRY_URL', variable: 'DOCKER_REGISTRY_URL')]) {
-                      sh 'docker build -t ${DOCKER_REGISTRY_URL}/php:$BUILD_NUMBER .'
+                      sh 'docker build -t ${DOCKER_REGISTRY_URL}/nodejs:$BUILD_NUMBER .'
                  }
             }
         }
