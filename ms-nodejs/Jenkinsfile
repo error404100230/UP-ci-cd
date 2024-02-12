@@ -39,6 +39,8 @@ pipeline  {
         
         stage('build image') {
             steps {
+                 echo "Workspace directory: ${env.WORKSPACE}"
+                sh 'ls -l ${env.WORKSPACE}'
                 sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_PRE_BUILD}' --form chat_id='${CHAT_ID}'"
                  withCredentials([string(credentialsId: 'DOCKER_REGISTRY_URL', variable: 'DOCKER_REGISTRY_URL')]) {
                       sh 'docker build -t ${DOCKER_REGISTRY_URL}/nodejs:$BUILD_NUMBER .'
