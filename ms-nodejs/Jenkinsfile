@@ -2,8 +2,7 @@ pipeline  {
     agent any
 
     environment {
-
-        TOKEN = "6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A"
+       TOKEN = "6476965277:AAGbiC51dS9RwGVo7y68OUJ3A1m5SbXVS4A"
         CHAT_ID = "-4002181219"
 
         // Telegram Message Pre Build
@@ -36,11 +35,8 @@ pipeline  {
           
             }
         }
-        
         stage('build image') {
             steps {
-                 echo "Workspace directory: ${env.WORKSPACE}"
-                sh 'ls -l ${env.WORKSPACE}'
                 sh "curl --location --request POST 'https://api.telegram.org/bot${TOKEN}/sendMessage' --form text='${TEXT_PRE_BUILD}' --form chat_id='${CHAT_ID}'"
                  withCredentials([string(credentialsId: 'DOCKER_REGISTRY_URL', variable: 'DOCKER_REGISTRY_URL')]) {
                       sh 'docker build -t ${DOCKER_REGISTRY_URL}/nodejs:$BUILD_NUMBER .'
@@ -60,7 +56,7 @@ pipeline  {
             }
         }
 
-        stage('deploy swarm container') {
+         stage('deploy swarm container') {
             steps {
                  script {
                     echo '${env.STACK_NAME}'
@@ -70,6 +66,7 @@ pipeline  {
             }
         }
 
+        
     }
 
     post {
