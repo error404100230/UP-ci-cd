@@ -31,7 +31,7 @@ services:
         condition: on-failure
     
   service-java:
-    image: vinsovann847/java:2
+    image: vinsovann847/java:3
     ports:
       - 6006:8080
     deploy:
