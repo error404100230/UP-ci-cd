@@ -1,8 +1,59 @@
-version: '2.4'
+version: '3.5'
+ 
 services:
-  db:
-    image: postgres
-  my_app:
-    build: ./test-app
+            
+  service-python:
+    image: vinsovann847/python:5
     ports:
-      - "8080:8080"
+      - 6007:8080
+    deploy:
+      mode: replicated
+      replicas: 3
+      update_config:
+        parallelism: 1
+        order: start-first
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+
+  service-nodejs:
+    image: vinsovann847/nodejs:7
+    ports:
+      - 6005:3000
+    deploy:
+      mode: replicated
+      replicas: 3
+      update_config:
+        parallelism: 1
+        order: start-first
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+    
+  service-java:
+    image: vinsovann847/java:2
+    ports:
+      - 6006:8080
+    deploy:
+      mode: replicated
+      replicas: 3
+      update_config:
+        parallelism: 1
+        order: start-first
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+
+  service-php:
+    image: vinsovann847/php:8
+    ports:
+      - 6004:80
+    deploy:
+      mode: replicated
+      replicas: 3
+      update_config:
+        parallelism: 1
+        order: start-first
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
