@@ -15,8 +15,7 @@ pipeline  {
         // Telegram Message Success and Failure
         TEXT_SUCCESS_BUILD = "${JOB_NAME} is Success"
         TEXT_FAILURE_BUILD = "${JOB_NAME} is Failure"
-        // USERHUB = credentials('DOCKER_REGISTRY_URL')
-        USERHUB = "vinsovann847"
+        USERHUB = credentials('DOCKER_REGISTRY_URL')
         ARTIFACT = "php"
         NUMBER = "${CURRENT_BUILD_NUMBER}"
         STACK_NAME = "assessment3"
@@ -26,14 +25,15 @@ pipeline  {
 
     stages {
 
-        stage('Branch'){
-            steps {
-                echo "branch ${params.branchName.split('/').last()}"
-            }
-        }
+        // stage('Branch'){
+        //     steps {
+        //         echo "branch ${params.branchName.split('/').last()}"
+        //     }
+        // }
         stage('checkout code') {
             steps {
-                checkout scmGit(branches: [[name: "${params.branchName.split('/').last()}"]], extensions: [], userRemoteConfigs: [[url: 'https://github.com/error404100230/php-docker']])
+                // checkout scmGit(branches: [[name: "${params.branchName.split('/').last()}"]], extensions: [], userRemoteConfigs: [[url: 'https://github.com/error404100230/php-docker']])
+                  checkout scmGit(branches: [[name: 'main', extensions: [], userRemoteConfigs: [[url: 'https://github.com/error404100230/php-docker']])
           
             }
         }
