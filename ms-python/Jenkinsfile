@@ -17,6 +17,7 @@ pipeline  {
         USERHUB = credentials('DOCKER_REGISTRY_URL')
         ARTIFACT = "python"
         NUMBER = "${CURRENT_BUILD_NUMBER}"
+        SERVER_SWARM="ubuntu@ec2-13-215-45-136.ap-southeast-1.compute.amazonaws.com"
         STACK_NAME = "assessment3"
     }
 
@@ -59,8 +60,13 @@ pipeline  {
         stage('deploy swarm container') {
             steps {
                 script {
+                  sh "ssh -v ${env.SERVER_SWARM}"
+                    def currentDir = pwd()
+                    echo "Current directory: ${currentDir}"
+                    sh "scp  ${currentDir}/docker-compose.yml ${env.SERVER_SWARM}:/home/ubuntu/"
                     echo '${env.STACK_NAME}'
-                    sh "docker stack deploy -c docker-compose.yml '${env.STACK_NAME}'"
+                    // sh "docker stack deploy -c docker-compose.yml '${env.STACK_NAME}'"
+                     sh "ssh ${env.SERVER_SWARM}  'USERHUB=${env.USERHUB} ARTIFACT=${env.ARTIFACT} NUMBER=${env.NUMBER} docker stack deploy -c /home/ubuntu/docker-compose.yml ${env.STACK_NAME}'"
                 }
                 
             }
