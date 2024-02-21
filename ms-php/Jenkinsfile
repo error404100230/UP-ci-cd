@@ -66,10 +66,10 @@ pipeline  {
                     sh "ssh -v ${env.SERVER_SWARM}"
                     def currentDir = pwd()
                     echo "Current directory: ${currentDir}"
-                    sh "scp  ${currentDir}/docker-compose.yml ${env.SERVER_SWARM}:/home/ubuntu/php"
+                    sh "scp  ${currentDir}/docker-compose.yml ${env.SERVER_SWARM}:/home/ubuntu/"
                     echo '${env.STACK_NAME}'
                     // sh "docker stack deploy -c docker-compose.yml '${env.STACK_NAME}'"
-                     sh "ssh ${env.SERVER_SWARM}  'USERHUB=${env.USERHUB} ARTIFACT=${env.ARTIFACT} NUMBER=${env.NUMBER} docker stack deploy -c /home/ubuntu/php/docker-compose.yml ${env.STACK_NAME}'"
+                     sh "ssh ${env.SERVER_SWARM}  'USERHUB=${env.USERHUB} ARTIFACT=${env.ARTIFACT} NUMBER=${env.NUMBER} docker stack deploy -c /home/ubuntu/docker-compose.yml ${env.STACK_NAME}'"
                 }
                 
             }
