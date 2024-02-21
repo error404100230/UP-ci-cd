@@ -7,7 +7,7 @@ pipeline  {
 
         // Telegram Message Pre Build
         CURRENT_BUILD_NUMBER = "${currentBuild.number}"
-        GIT_INFO = "Hello from dual gaming "
+        GIT_INFO = "Hello from Jenkin Server "
         TEXT_BREAK = "--------------------------------------------------------------"
         TEXT_PRE_BUILD = "${TEXT_BREAK}\n${GIT_INFO}\n${JOB_NAME} is Building \n ${CURRENT_BUILD_NUMBER}"
 
