@@ -63,7 +63,7 @@ pipeline  {
         stage('deploy swarm container') {
             steps {
                  script {
-                     sh 'ssh -v ${env.SERVER_SWARM}'
+                    sh "ssh -v ${env.SERVER_SWARM}"
                     def currentDir = pwd()
                     echo "Current directory: ${currentDir}"
                     sh "scp  ${currentDir}/docker-compose.yml ${env.SERVER_SWARM}:/home/php"
