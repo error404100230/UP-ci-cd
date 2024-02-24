@@ -16,7 +16,7 @@ pipeline  {
         TEXT_SUCCESS_BUILD = "${JOB_NAME} is Success"
         TEXT_FAILURE_BUILD = "${JOB_NAME} is Failure"
         USERHUB = credentials('DOCKER_REGISTRY_URL')
-        SERVER_SWARM="ubuntu@172.31.29.127"
+        SERVER_SWARM="ubuntu@13.213.67.168"
         ARTIFACT = "php"
         NUMBER = "${CURRENT_BUILD_NUMBER}"
         STACK_NAME = "assessment3"
